@@ -18,9 +18,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#about">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#services">LIST</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Home</a></li> <li class="nav-item"><a class="nav-link" href="#services">LIST</a></li> <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -48,7 +46,7 @@
 
                         <form method='post' action="/post_submit">
                             <input type='text' class="form-control" name="username" placeholder="User Nname">
-                            <input type='text' class="form-control" name="xxxx" placeholder="id">
+                            <input type='text' class="form-control" name="id" placeholder="id">
                             <input type='text' class="form-control" name="valence" placeholder="valence">
                             <input type='text' class="form-control" name="energy" placeholder="energy">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -65,9 +63,42 @@
                     <div class="col-lg-8">
                         <h2>Song list</h2>
 						<p class="lead">Hello! {{username}}. Here shows the 5 song list you might love it!</p>
-                        {% for table in tables %}
-                            {{ table|safe }}
-                        {% endfor %}
+
+						<table class="table">
+						  <thead>
+							<tr>
+							  <th scope="col">id</th>
+							  <th scope="col">genre</th>
+							  <th scope="col">track_name</th>
+							  <th scope="col">artist_name</th>
+							  <th scope="col">valence</th>
+							  <th scope="col">energy</th>
+							  <th scope="col">mood_vec</th>
+							</tr>
+						  </thead>
+						  <tbody>
+
+
+							{% for table in tables %}
+							<tr>
+								<td>{{ table[0] }}</td>
+								<td>{{ table[1] }}</td>
+								<td>{{ table[2] }}</td>
+								<td>{{ table[3] }}</td>
+								<td>{{ table[4] }}</td>
+								<td>{{ table[5] }}</td>
+								<td>{{ table[6] }}</td>
+
+							</tr>
+							{% endfor %}
+
+						  </tbody>
+						</table>
+
+						{% for table in tables %}
+						<iframe width="420" height="345" src="https://open.spotify.com/embed/track/{{ table[0] }}"></iframe>
+						{% endfor %}
+
                     </div>
                 </div>
             </div>
