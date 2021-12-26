@@ -64,16 +64,14 @@
                         <h2>Song list</h2>
 						<p class="lead">Hello! {{username}}. Here shows the 5 song list you might love it!</p>
 
-						<table class="table">
+						<table class="table table-striped">
 						  <thead>
 							<tr>
-							  <th scope="col">id</th>
-							  <th scope="col">genre</th>
-							  <th scope="col">track_name</th>
-							  <th scope="col">artist_name</th>
-							  <th scope="col">valence</th>
-							  <th scope="col">energy</th>
-							  <th scope="col">mood_vec</th>
+							  <th>genre</th>
+							  <th>track_name</th>
+							  <th>artist_name</th>
+							  <th>valence</th>
+							  <th>energy</th>
 							</tr>
 						  </thead>
 						  <tbody>
@@ -81,23 +79,26 @@
 
 							{% for table in tables %}
 							<tr>
-								<td>{{ table[0] }}</td>
 								<td>{{ table[1] }}</td>
 								<td>{{ table[2] }}</td>
 								<td>{{ table[3] }}</td>
 								<td>{{ table[4] }}</td>
 								<td>{{ table[5] }}</td>
-								<td>{{ table[6] }}</td>
 
 							</tr>
 							{% endfor %}
 
 						  </tbody>
 						</table>
+						<div class="embed-responsive embed-responsive-16by9">
+
 
 						{% for table in tables %}
-						<iframe width="420" height="345" src="https://open.spotify.com/embed/track/{{ table[0] }}"></iframe>
+						<iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{ table[0] }}"></iframe>
 						{% endfor %}
+
+
+						</div>
 
                     </div>
                 </div>
