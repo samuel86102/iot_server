@@ -42,7 +42,6 @@ def index():
 def submit():
     if request.method == 'POST':
 
-
         username=request.values.get('username')
         id1=int(request.values.get('id'))
         val1=float(request.values.get('valence'))
@@ -61,32 +60,20 @@ def submit():
 
         print((resdf))
 
-    '''
-        new_df = new_df.to_numpy().tolist()
-        new_df = new_df[:5]
-        # print((new_df))
-    '''
-    '''
-        for i in range(len(new_df)):
-            print(i,":",new_df[i])
-    '''
 
     #return render_template('index.html',username=username, id1=id1, val1=val1, en1=en1, tables=[df.to_html(classes='data', header="true")])
     return render_template('index.html',username=username, id1=id1, val1=val1, en1=en1, tables=resdf)
-
-
+'''
 @app.route("/post_submit", methods=['GET', 'POST'])
 def html_table():
-    '''
     new_df = df.append({
     "id": id1,
     "valence": val1,
     "energy": en1
     }, ignore_index=True)
-    '''
     #resdf = df.DataFrame(calsp(track_id = id1, invalence = val1, inenergy = en1, ref_df = new_df, sp = sp, n_recs = 5))
     return render_template('index.html', tables=[df.to_html(classes='data', header="true")])
-
-
+'''
 if __name__ == "__main__":
     app.run( host='0.0.0.0', port=5000,debug=True)
+
