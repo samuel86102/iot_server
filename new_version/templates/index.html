@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Scrolling Nav IoT Takaki</title>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='dist/assets/favicon.ico') }}" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{{ url_for('static', filename='dist/css/styles.css') }}" rel="stylesheet" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container px-4">
+                <a class="navbar-brand" href="#page-top">Hello! Takaki!</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="#about">Home</a></li> <li class="nav-item"><a class="nav-link" href="#services">LIST</a></li> <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="bg-primary bg-gradient text-white">
+            <div class="container px-4 text-center">
+                <h1 class="fw-bolder">Welcome to Takaki, a fantastic music experience trip is wating for you!</h1>
+                <p class="lead">A mood-based music recommendation system</p>
+                <a class="btn btn-lg btn-light" href="#about">Start adventure!</a>
+            </div>
+        </header>
+        <!-- About section-->
+        <section id="about">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Step 1.</h2>
+                        <p class="lead">The following points show the features of Takaki:</p>
+                        <ul>
+                            <li>Home, office, any where, any member, playing music with emotion and scene</li>
+                            <li>With register Takaki, a marvel journey is waiting for you.</li>
+                            <li>Powered by Spotipy and Flask.</li>
+                        </ul>
+
+                        <form method='post' action="/post_submit">
+                            <input type='text' class="form-control" name="username" placeholder="User Nname">
+                            <input type='text' class="form-control" name="valence" placeholder="valence">
+                            <input type='text' class="form-control" name="energy" placeholder="energy">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Services section-->
+        <section class="bg-light" id="services">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Song list</h2>
+            <p class="lead">Hello! {{username}}. Here shows the 5 song list you might love it!</p>
+
+	    <p>{{ redata }}</p>
+		<div id="table"></div>
+				<!--
+            <table class="table table-striped" id="song_list">
+              <thead>
+              <tr>
+                <th>genre</th>
+                <th>track_name</th>
+                <th>artist_name</th>
+                <th>valence</th>
+                <th>energy</th>
+              </tr>
+              </thead>
+              <tbody>
+
+
+              {% for table in tables %}
+              <tr>
+                <td>{{ table[1] }}</td>
+                <td>{{ table[2] }}</td>
+                <td>{{ table[3] }}</td>
+                <td>{{ table[4] }}</td>
+                <td>{{ table[5] }}</td>
+
+              </tr>
+              {% endfor %}
+
+              </tbody>
+            </table>
+				-->
+            <div class="embed-responsive embed-responsive-16by9">
+
+
+            {% for table in tables %}
+            <iframe class="embed-responsive-item" src="https://open.spotify.com/embed/track/{{ table[0] }}"></iframe>
+            {% endfor %}
+
+
+            </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact section-->
+        <section id="contact">
+            <div class="container px-4">
+                <div class="row gx-4 justify-content-center">
+                    <div class="col-lg-8">
+                        <h2>Contact us</h2>
+                        <p class="lead">This is NTNU IoT class project, contributed by Takaki group.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container px-4"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
+        </footer>
+
+
+
+
+		<script>
+		
+		var json_res;
+
+		function repeatedly_get(){
+		  fetch_from_server();
+		  setTimeout(repeatedly_get, 5000);
+		}
+
+		repeatedly_get();
+
+
+		function fetch_from_server(){
+		  var req = new XMLHttpRequest();
+		  req.open('GET', '/fetch_data');
+		  req.onreadystatechange = function () {
+			if (req.readyState === 4) {
+			  console.log(req.responseText);
+			  json_res  = req.responseText;
+			}
+		  };
+		  req.send();
+		}
+
+
+
+
+		//json to table ===============
+/*
+			function json2table(jsonString, $table) {
+            var json = JSON.parse(jsonString);
+            var json = jsonString;
+            var cols = Object.keys(json[0]);
+
+            var headerRow = '';
+            var bodyRows = '';
+
+            function capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+
+            $table.html('<thead><tr></tr></thead><tbody></tbody>');
+
+            cols.map(function (col) {
+                headerRow += '<th>' + capitalizeFirstLetter(col) + '</th>';
+            });
+
+            json.map(function (row) {
+                bodyRows += '<tr>';
+
+                cols.map(function (colName) {
+                    bodyRows += '<td>' + row[colName] + '</td>';
+                })
+
+                bodyRows += '</tr>';
+            });
+
+            $table.find('thead tr').append(headerRow);
+            $table.find('tbody').append(bodyRows);
+        }
+
+
+        // ==== DEMO ====
+
+        var json = `
+[{\"id\":1,\"name\":\"Jay\",\"email\":\"Jay@gmail.com\",\"password\":\"123456\"},{\"id\":2,\"name\":\"Briton\",\"email\":\"Briton@gmail.com\",\"password\":\"123456\"},{\"id\":4,\"name\":\"Tony\",\"email\":\"Tony@gmail.com\",\"password\":\"123456\"}]
+        `;
+        json2table(json_res, $("#table"));
+
+*/
+var headings = Object.keys(json_res);
+
+var html = '<table>';
+
+// build table headings
+html += '<thead><tr>';
+$.each(headings, function () {
+  // this is the current heading
+  html += '<th>' + this + '</th>';
+});
+html += '</tr></thead>';
+
+
+// build table body
+html += '<tbody>';
+// use the length of first array to determine how many rows
+for (i = 0, len = json[headings[0]].length; i < len; i++) {
+  html += '<tr>';
+  // build each cell using the heading's ith element
+  $.each(headings, function () {
+    html += '<td>' + json[this][i] + '</td>';
+  });
+  html += '</tr>';
+}
+html += '</tbody>';
+html += '</table>';
+
+$('#table').append(html);
+
+
+
+
+		</script>
+
+
+
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{{ url_for('static', filename='dist/js/scripts.js') }}"></script>
+    </body>
+</html>

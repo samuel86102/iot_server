@@ -9,6 +9,10 @@
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='dist/assets/favicon.ico') }}" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{ url_for('static', filename='dist/css/styles.css') }}" rel="stylesheet" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -120,6 +124,43 @@
         <footer class="py-5 bg-dark">
             <div class="container px-4"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
         </footer>
+
+
+
+
+		<script>
+
+	function repeatedly_get(){
+	  fetch_from_server();
+	  setTimeout(repeatedly_get, 2000);
+	}
+
+	repeatedly_get();
+
+
+	function fetch_from_server(){
+	  var req = new XMLHttpRequest();
+	  req.open('GET', '/test');
+	  req.onreadystatechange = function () {
+		if (req.readyState === 4) {
+		  console.log(req.responseText);
+		  process_data(req.responseText);
+		}
+	  };
+	  req.send();
+	}
+
+
+
+
+
+
+
+		</script>
+
+
+
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
